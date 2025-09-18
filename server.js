@@ -28,6 +28,16 @@ app.post('/api/recipes', (req, res) => {
   }
 });
 
+app.get('/api/recipes', (req, res) => {
+  try {
+    const data = fs.readFileSync(dataFile, 'utf-8');
+    const recipes = JSON.parse(data);
+    res.json(recipes);
+  } catch (err) {
+    res.status(500).json({ error: 'Could not read recipes' });
+  }
+});
+
 // Start the server
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
